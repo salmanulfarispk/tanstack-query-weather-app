@@ -7,7 +7,7 @@ import Citypage from './pages/City-page'
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true,v7_relativeSplatPath: true}}>
       <ThemeProvider defaultTheme="dark">
       <Layout>
         <Routes>
