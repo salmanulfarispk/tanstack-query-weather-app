@@ -53,7 +53,7 @@ export function useReverseGeoQuery(coordinates: Coordinates | null){
 
 
 
-export function useLocationSearch(query: string) {
+export function useSearchLocation(query: string) {
     return useQuery({
       queryKey: WEATHER_KEYS.search(query),
       queryFn: () => weatherAPI.searchLocations(query),
