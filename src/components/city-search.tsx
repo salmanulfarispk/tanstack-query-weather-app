@@ -2,7 +2,7 @@ import { useSearchLocation } from "@/hooks/use-weather";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
-import { Clock, Loader2, Search, XCircle } from "lucide-react";
+import { Clock, Loader2, Search, Star, XCircle } from "lucide-react";
 import {
   Command,
   CommandDialog,
@@ -15,6 +15,7 @@ import {
 } from "./ui/command";
 import { useSearchHistory } from "@/hooks/use-search-history";
 import { format } from "date-fns";
+import { useFavourites } from "@/hooks/use-favourite";
 
 export const CitySearch = () => {
   const [open, setOpen] = useState(false);
@@ -23,6 +24,7 @@ export const CitySearch = () => {
 
   const { data: locations, isLoading } = useSearchLocation(query);
   const {history,addToHistory,clearHistory}=useSearchHistory();
+  const { favorites }=useFavourites()
 
   const handleSelect = (value: string) => {
     const [lat, lon, name, country] = value.split("|");
@@ -64,9 +66,30 @@ export const CitySearch = () => {
               <CommandEmpty>No Cities found.</CommandEmpty>
             )}
 
-            {/* <CommandGroup heading="Favourites">
-              <CommandItem>Calendar</CommandItem>
-            </CommandGroup> */}
+            
+              {/* Favorites Section */}
+              {favorites.length > 0 && (
+              <CommandGroup heading="Favorites">
+                {favorites.map((city) => (
+                  <CommandItem
+                    key={city.id}
+                    value={`${city.lat}|${city.lon}|${city.name}|${city.country}`}
+                    onSelect={handleSelect}
+                  >
+                    <Star className="mr-2 h-4 w-4 text-yellow-500" />
+                    <span>{city.name}</span>
+                    {city.state && (
+                      <span className="text-sm text-muted-foreground">
+                        , {city.state}
+                      </span>
+                    )}
+                    <span className="text-sm text-muted-foreground">
+                      , {city.country}
+                    </span>
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            )}
 
 
           
