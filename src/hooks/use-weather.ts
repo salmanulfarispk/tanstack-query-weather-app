@@ -57,6 +57,6 @@ export function useSearchLocation(query: string) {
     return useQuery({
       queryKey: WEATHER_KEYS.search(query),
       queryFn: () => weatherAPI.searchLocations(query),
-      enabled: query.length >= 3, //// Only run the query if the query length is 3 or more
+      enabled: query.length >= 3,  // Only run the query if the query length is 3 or more
     });
   }
